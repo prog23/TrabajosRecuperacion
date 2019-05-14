@@ -5,8 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,6 +25,47 @@ public class Juego extends JPanel {
 	private Lienzo lienzo;
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
 	private Font font;
+	/*private boolean running = false;
+	private Thread thread;
+	
+	private synchronized void start() {
+		if(running)
+			return;
+		
+		running = true;
+		thread = new Thread();
+		thread.start();
+	}
+	
+	private synchronized void stop() {
+		if(!running)
+			return;
+		
+		running = false;
+		
+		try {
+			thread.join();
+		}catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.exit(1);
+	}
+	
+	public void run() {
+		while(running) {
+			System.out.println("WORKING");
+		}
+		stop();
+	}
+	
+	private enum STATE{
+		MENU,
+		GAME
+	}
+	
+	private STATE State = STATE.MENU;
+	*/
+	
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo=lienzo;
@@ -33,13 +78,16 @@ public class Juego extends JPanel {
 		setLayout(new BorderLayout());
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));
+		
+		
 		JLabel lblPalabra = new JLabel("PALABRA");
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 								BorderFactory.createCompoundBorder (BorderFactory.createLineBorder(Color.BLACK),
 										BorderFactory.createEmptyBorder(20, 20, 20, 20))));
 		lblPalabra.setHorizontalAlignment(JLabel.CENTER);
-		lblPalabra.setFont(font);
-		sup.add(lblPalabra);
+		lblPalabra.setFont(font);		
+		sup.add(lblPalabra);				
+		
 		
 		
 		
@@ -54,6 +102,11 @@ public class Juego extends JPanel {
 		inf.add(new JButton("Jugar"));
 		
 		add(sup, BorderLayout.CENTER);		
-		add(inf, BorderLayout.SOUTH);
+		add(inf, BorderLayout.SOUTH);		
+		
 	}
+	
+	
+	
+	
 }
