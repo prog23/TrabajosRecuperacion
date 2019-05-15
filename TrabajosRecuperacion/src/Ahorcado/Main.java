@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 	public static void main(String[] args) throws FontFormatException, IOException {
 		JFrame frame = new JFrame("Ahorcado");		
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.getContentPane().setLayout(new BorderLayout());
 		Lienzo lienzo = new Lienzo(500, 500);		
