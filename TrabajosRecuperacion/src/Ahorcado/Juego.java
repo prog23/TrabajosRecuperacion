@@ -7,27 +7,14 @@ import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.TreeMap;
 
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -41,22 +28,25 @@ import javax.swing.border.BevelBorder;
 
 public class Juego extends JPanel implements ActionListener{
 	
-	private static final long serialVersionUID = 1L;
+	List<String> palabras = new ArrayList<>();
 	
+	private static final long serialVersionUID = 1L;
+
 	private Lienzo lienzo;
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
-	private Font font;	
-	File archivo = new File ("/listado-general.txt");	
-	Random azar = new Random();		
+	private Font font;		
 	
-	private final Map<Integer, List<String>> diccionario;
 	
-
-
 
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo=lienzo;			
 	
+		BufferedReader to = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/listado-getneral.txt")));
+		String linea;
+		while ((linea = to.readLine()) != null)
+			palabras.add(linea);
+		to.close();
+		Random fil = new Random();
 		
 		InputStream in = getClass().getResourceAsStream ("/docktrin.ttf");
 		font = Font.createFont(Font.PLAIN, in).deriveFont(30f);
@@ -66,14 +56,26 @@ public class Juego extends JPanel implements ActionListener{
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));		
 		
-		
-		
+		JLabel lineas = new JLabel("__ ");
 		JLabel lblPalabra = new JLabel("PALABRA");
+		
+		
+		
+		for (int j = 0; j < 24;j++) {
+			longitudPalabras[j] = listaPalabras[j].length();
+		}
+		int m = 0;
+		while(m < longitudPalabras[nivel]) {
+			linea += "__ ";
+			m++;
+		}
+		lineas.setText(linea);
 		
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 								BorderFactory.createCompoundBorder (BorderFactory.createLineBorder(Color.BLACK),
 										BorderFactory.createEmptyBorder(20, 20, 20, 20))));
 		lblPalabra.setHorizontalAlignment(JLabel.CENTER);		
+		lineas.setHorizontalAlignment(JLabel.CENTER);	
 		lblPalabra.setFont(font);	
 		sup.add(lblPalabra);
 		
@@ -104,19 +106,10 @@ public class Juego extends JPanel implements ActionListener{
 		
 		
 	}		
+	
+	
 
 	
 }
 
-		
-	
-	
-	
-/*JButton btnNewButton = new JButton("New button");
-btnNewButton.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent arg0) {
-	}
-});		
-btnNewButton.setAction(action);
-btnNewButton.setBounds(237, 11, 297, 156);		
-*/
+
