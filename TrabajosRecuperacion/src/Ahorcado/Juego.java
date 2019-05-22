@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,32 +22,34 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-
-
-
-
-
 public class Juego extends JPanel implements ActionListener{
 	
 	List<String> palabras = new ArrayList<>();
 	
 	private static final long serialVersionUID = 1L;
-
 	private Lienzo lienzo;
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
 	private Font font;		
+	JButton[] letra = new JButton[letras.length()];
+	JButton playGame = new JButton("Jugar");
+	static int fallos = 0;
+	static int aciertos = 0;
+	String linea;
+	private char[] guiones;
+	private char[] adivinar;
+	JLabel lblPalabra = new JLabel("Palabra");
 	
 	
-
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo=lienzo;			
 	
-		BufferedReader to = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/listado-getneral.txt")));
-		String linea;
+		BufferedReader to = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/listado-general.txt")));
+		
 		while ((linea = to.readLine()) != null)
 			palabras.add(linea);
-		to.close();
-		Random fil = new Random();
+		to.close();		
+			
+		
 		
 		InputStream in = getClass().getResourceAsStream ("/docktrin.ttf");
 		font = Font.createFont(Font.PLAIN, in).deriveFont(30f);
@@ -55,55 +58,73 @@ public class Juego extends JPanel implements ActionListener{
 		setLayout(new BorderLayout());
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));		
+					
 		
-		JLabel lineas = new JLabel("__ ");
-		JLabel lblPalabra = new JLabel("PALABRA");
-		
-		
-		
-		for (int j = 0; j < 24;j++) {
-			longitudPalabras[j] = listaPalabras[j].length();
-		}
-		int m = 0;
-		while(m < longitudPalabras[nivel]) {
-			linea += "__ ";
-			m++;
-		}
-		lineas.setText(linea);
 		
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 								BorderFactory.createCompoundBorder (BorderFactory.createLineBorder(Color.BLACK),
 										BorderFactory.createEmptyBorder(20, 20, 20, 20))));
-		lblPalabra.setHorizontalAlignment(JLabel.CENTER);		
-		lineas.setHorizontalAlignment(JLabel.CENTER);	
+			
 		lblPalabra.setFont(font);	
-		sup.add(lblPalabra);
-		
-		
+		sup.add(lblPalabra);		
 		
 		
 		JPanel inf = new JPanel (new GridLayout(4, 7));
 		inf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), BorderFactory.createBevelBorder(BevelBorder.RAISED)));
+		
+		
+	
+		
+		
 		for(int i=0; i<letras.length();i++) {
-			JButton b = new JButton(letras.substring(i, i + 1));
-			b.setBackground(Color.ORANGE);
-			b.setFont(font);
-			inf.add(b);
-		}		
+			letra[i] = new JButton(letras.substring(i, i + 1));
+			letra[i].setFont(font);
+			inf.add(letra[i]);
+			letra[i].addActionListener(this);
+			letra[i].setEnabled(false);
+		}	
 		
-		JButton playGame = new JButton("Jugar");	
+		inf.add(playGame);	
 		playGame.addActionListener(this);
-		
-		inf.add(playGame);		
 		add(sup, BorderLayout.CENTER);		
 		add(inf, BorderLayout.SOUTH); 
 	
 	}
 
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String accion = e.getActionCommand();
 		
+		if(accion.equals("Jugar")) {
+			for(JButton b:letra)
+				b.setEnabled(true);
+			int posicion = (int) (Math.random() * palabras.size());
+			adivinar = palabras.get(posicion).toCharArray();	
+			guiones = new char[adivinar.length];
+			playGame.setBackground(Color.RED);
+				for (int i = 0; i < adivinar.length; i++) {
+					guiones[i] = '_';
+					linea += guiones[i] = '_';
+					System.out.print(guiones);
+					lblPalabra.setText(linea);
+				}
+			
+		}else {
+			char c = accion.charAt(0);
+			boolean fallo = true;
+			for(int i=0;i<adivinar.length;i++) {
+				if(c==adivinar[i]) {
+					guiones[i] = c;
+					fallo = false;
+				}
+			}
+			if(fallo)
+				lienzo.incrementarFallos();
+			else
+				lblPalabra.setText(String.valueOf(guiones));
+		}
 		
 	}		
 	

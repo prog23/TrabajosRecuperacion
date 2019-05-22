@@ -22,7 +22,7 @@ public class Lienzo extends JPanel {
 	private static final BasicStroke discontinuo = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, patron, 0);
 	
 	private Shape[] vector;
-	private int fallos = 5;
+	private int fallos = 0;
 	
 	
 	public Lienzo(int width, int height) {
