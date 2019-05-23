@@ -32,8 +32,9 @@ public class Juego extends JPanel implements ActionListener{
 	private Font font;		
 	JButton[] letra = new JButton[letras.length()];
 	JButton playGame = new JButton("Jugar");
-	static int fallos = 0;
+//	static int fallos = 0;
 	static int aciertos = 0;
+	//static int pos = 0;
 	String linea;
 	private char[] guiones;
 	private char[] adivinar;
@@ -114,21 +115,36 @@ public class Juego extends JPanel implements ActionListener{
 		}else {
 			char c = accion.charAt(0);
 			boolean fallo = true;
+			//boolean encontrada = true;
 			for(int i=0;i<adivinar.length;i++) {
 				if(c==adivinar[i]) {
 					guiones[i] = c;
 					fallo = false;
 				}
 			}
-			if(fallo)
+			
+			if(fallo) {
 				lienzo.incrementarFallos();
-			else
-				lblPalabra.setText(String.valueOf(guiones));
+			}
+			else {
+				lblPalabra.setText(String.valueOf(guiones));		
+			}
+			
+					
+				if (Lienzo.fallos >=11) {					
+					lblPalabra.setText("GAME OVER");
+				}
+				
+				else if (aciertos==linea.length()){
+					lblPalabra.setText("GANASTE");
+				}
+				
+			//aciertos==guiones.length
+			
+		}		
 		}
 		
-	}		
-	
-	
+		
 
 	
 }
