@@ -87,8 +87,6 @@ public class Ejercicio3 {
 						if (direccion.containsKey(usuario)) {
 							if (direccion.get(usuario).containsKey(ip)) {
 								direccion.get(usuario).replace(ip, direccion.get(usuario).get(ip), direccion.get(usuario).get(ip) + 1);
-								System.out.println("Nuevo mensaje del Usuario: " + usuario + " - IP de acceso: " + ip);
-								System.out.println(" ");
 								estado = 0;
 								token = null;
 								s.reset();
