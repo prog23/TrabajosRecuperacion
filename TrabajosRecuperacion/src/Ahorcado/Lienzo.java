@@ -64,7 +64,7 @@ public class Lienzo extends JPanel {
 	}
 
 	public void reset() {
-		fallos = 0;
+		fallos = 5;
 		repaint();
 	}
 	

@@ -131,12 +131,16 @@ public class Juego extends JPanel implements ActionListener{
 			}
 			
 					
-				if (Lienzo.fallos >=11) {					
-					lblPalabra.setText("GAME OVER");
+				if (Lienzo.fallos >=11) {				
+					
+					lblPalabra.setText("GAME OVER");					
+					lienzo.reset();
+					
 				}
 				
-				else if (aciertos==linea.length()){
+				if (adivinar.equals(palabras)){
 					lblPalabra.setText("GANASTE");
+					lienzo.reset();
 				}
 				
 			//aciertos==guiones.length
