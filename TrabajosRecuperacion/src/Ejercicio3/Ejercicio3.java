@@ -95,7 +95,7 @@ public class Ejercicio3 {
 								fin2 = true;
 							} else {
 								direccion.get(usuario).put(ip, 1);
-								System.out.println("Mensaje desde nueva IP: " + ip + " - Usuario: " + usuario);
+								System.out.println("Nueva IP: " + ip + " Usuario: " + usuario);
 								System.out.println(" ");
 								estado = 0;
 								token = null;
@@ -106,7 +106,7 @@ public class Ejercicio3 {
 							mens = 1;
 							direccion.put(usuario, new HashMap<>());
 							direccion.get(usuario).put(ip, mens);
-							System.out.println("Nuevo Usuario: " + usuario + " - IP de acceso: " + ip);
+							System.out.println("Nuevo Usuario: " + usuario + " IP de acceso: " + ip);
 							System.out.println(" ");
 							estado = 0;
 							token = null;
@@ -129,10 +129,7 @@ public class Ejercicio3 {
 		} while (!fin);
 		
 		
-		System.out.println(" ");
-		System.out.println(" ");
-		System.out.println("DATOS REGISTRADOS");
-		System.out.println(" ");
+	
 		
 		for (Entry<String, Map<String, Integer>> user : direccion.entrySet()) {
 			int total1 = 0;
@@ -149,7 +146,6 @@ public class Ejercicio3 {
 			System.out.println("Total de mensajes: " + total2);
 			System.out.println(" ");
 		}
-		System.out.println("FIN DE DATOS");
 	}
 
 

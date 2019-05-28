@@ -15,9 +15,12 @@ public class Main {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.getContentPane().setLayout(new BorderLayout());
+		
 		Lienzo lienzo = new Lienzo(500, 500);		
+		
 		frame.getContentPane().add(lienzo, BorderLayout.CENTER);
 		frame.getContentPane().add(new Juego(lienzo), BorderLayout.EAST );
+		
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		SwingUtilities.invokeLater(() -> {
