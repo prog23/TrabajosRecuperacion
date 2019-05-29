@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,6 +30,8 @@ public class Juego extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 1L;
 	private Lienzo lienzo;
+	private Color marronclaro=new Color(230,186,163);
+	//private Color marronletras=new Color(84,71,64);
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
 	private Font font;		
 	private Font fontlte;
@@ -45,6 +49,7 @@ public class Juego extends JPanel implements ActionListener{
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo=lienzo;			
+		
 		
 		BufferedReader to = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/listado-general.txt")));
 		
@@ -83,13 +88,12 @@ public class Juego extends JPanel implements ActionListener{
 		inf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 				BorderFactory.createBevelBorder(BevelBorder.RAISED)));		
 		inf.setBackground(Color.WHITE);
-	
 		
 		
 		for(int i=0; i<letras.length();i++) {
 			letra[i] = new JButton(letras.substring(i, i + 1));
 			letra[i].setFont(fontlte);
-			letra[i].setBackground(Color.ORANGE);
+			letra[i].setBackground(marronclaro);
 			inf.add(letra[i]);
 			letra[i].addActionListener(this);
 			letra[i].setEnabled(false);
@@ -114,45 +118,55 @@ public class Juego extends JPanel implements ActionListener{
 			for(JButton b:letra)
 				b.setEnabled(true);
 			int posicion = (int) (Math.random() * palabras.size());
-			adivinar = palabras.get(posicion).toCharArray();	
+			adivinar = palabras.get(posicion).toCharArray();
+			System.out.println(palabras.get(posicion));
 			guiones = new char[adivinar.length];
 			playGame.setBackground(Color.RED);
-				for (int i = 0; i < adivinar.length; i++) {
-					guiones[i] = '_';
-					linea += guiones[i] = '_';
-					System.out.print(guiones);
-					lblPalabra.setText(linea);
-				}
+			linea = "";
+			for (int i = 0; i < adivinar.length; i++) {
+				guiones[i] = '_';
+				linea += (guiones[i] + " ");
+			}
+			
+			lblPalabra.setText(linea);
 			
 		}else {
 			char c = accion.charAt(0);
-			boolean fallo = true;			
+			boolean fallo = true;		
+			linea = "";
 			for(int i=0;i<adivinar.length;i++) {
 				if(c==adivinar[i]) {
 					guiones[i] = c;
 					fallo = false;
 				}
+				linea += (guiones[i] + " ");
 			}
+			lblPalabra.setText(linea);
 			
+			boolean fin = false;
 			if(fallo) {
-				lienzo.incrementarFallos();
+				fin = lienzo.incrementarFallos();
 			}
-			else {
-				lblPalabra.setText(String.valueOf(guiones));		
-			}			
+						
 					
-				if (Lienzo.fallos >=11) {				
+				if (fin) {				
 					
 					lblPalabra.setText("GAME OVER");					
 					lienzo.reset();
 					repaint();
 					
-				}
-				
-				if (adivinar.equals(linea)){
-					lblPalabra.setText("GANASTE");
-					lienzo.reset();
-					repaint();					
+				} else {
+					boolean ganaste = true;
+					for (char letra: guiones)
+						if (letra == '_') {
+							ganaste = false;
+							break;
+						}
+					if (ganaste){					
+						lblPalabra.setText("GANASTE");
+						lienzo.reset();
+						repaint();					
+					}
 				}			
 			
 		}		

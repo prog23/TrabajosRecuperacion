@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.io.File;
@@ -20,11 +22,10 @@ public class Lienzo extends JPanel {
 	private static final float [] patron = {5, 3};
 	private static final BasicStroke solido = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
 	private static final BasicStroke discontinuo = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, patron, 0);
-	
 	private Shape[] vector;
-	public static int fallos = 5;
-	
-	
+	private static int fallos = 0;
+	private Color marronclaro=new Color(107,0,0);
+	//Image img = Toolkit.getDefaultToolkit().createImage("/madera.jpg");
 	
 	public Lienzo(int width, int height) {
 		setPreferredSize(new Dimension(width, height));
@@ -48,11 +49,12 @@ public class Lienzo extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D) g;		
+		
 		for (int i = 0; i < vector.length; i++) {
 			if(i < fallos)	{
 			// trazo continuo y color negro
-				g2d.setColor(Color.BLACK);
+				g2d.setColor(marronclaro);
 				g2d.setStroke(solido);
 			}
 			else {
@@ -65,7 +67,7 @@ public class Lienzo extends JPanel {
 	}
 
 	public void reset() {
-		fallos = 5;
+		fallos = 0;
 		repaint();
 	}
 	
@@ -76,4 +78,5 @@ public class Lienzo extends JPanel {
 		repaint();
 		return fallos == vector.length;
 	}
+	
 }
