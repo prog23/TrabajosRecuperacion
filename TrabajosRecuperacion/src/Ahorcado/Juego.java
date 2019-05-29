@@ -30,8 +30,10 @@ public class Juego extends JPanel implements ActionListener{
 	private Lienzo lienzo;
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
 	private Font font;		
+	private Font fontlte;
+	private Font fontplay;
 	JButton[] letra = new JButton[letras.length()];
-	JButton playGame = new JButton("Jugar");
+	JButton playGame = new JButton("PLAY");
 //	static int fallos = 0;
 	static int aciertos = 0;
 	//static int pos = 0;
@@ -43,7 +45,7 @@ public class Juego extends JPanel implements ActionListener{
 	
 	public Juego(Lienzo lienzo) throws FontFormatException, IOException {
 		this.lienzo=lienzo;			
-	
+		
 		BufferedReader to = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/listado-general.txt")));
 		
 		while ((linea = to.readLine()) != null)
@@ -53,43 +55,53 @@ public class Juego extends JPanel implements ActionListener{
 		
 		
 		InputStream in = getClass().getResourceAsStream ("/docktrin.ttf");
+		InputStream lte = getClass().getResourceAsStream("/teclado.ttf");
+		InputStream lpl = getClass().getResourceAsStream("/play.ttf");
 		font = Font.createFont(Font.PLAIN, in).deriveFont(30f);
+		fontlte = Font.createFont(Font.PLAIN, lte).deriveFont(30f);
+		fontplay = Font.createFont(Font.PLAIN, lpl).deriveFont(15f);
 		in.close();		
-			
+		
 		setLayout(new BorderLayout());
 		
 		JPanel sup = new JPanel(new GridLayout(1, 1));		
-					
+		sup.setBackground(Color.WHITE);
 		
 		
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 								BorderFactory.createCompoundBorder (BorderFactory.createLineBorder(Color.BLACK),
 										BorderFactory.createEmptyBorder(20, 20, 20, 20))));
-			
-		lblPalabra.setFont(font);	
-		sup.add(lblPalabra);		
+		
+		lblPalabra.setHorizontalAlignment(JLabel.CENTER);		
+		lblPalabra.setFont(font);		
+		sup.add(lblPalabra);
+		
+		
 		
 		
 		JPanel inf = new JPanel (new GridLayout(4, 7));
-		inf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), BorderFactory.createBevelBorder(BevelBorder.RAISED)));
-		
-		
+		inf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
+				BorderFactory.createBevelBorder(BevelBorder.RAISED)));		
+		inf.setBackground(Color.WHITE);
 	
 		
 		
 		for(int i=0; i<letras.length();i++) {
 			letra[i] = new JButton(letras.substring(i, i + 1));
-			letra[i].setFont(font);
+			letra[i].setFont(fontlte);
+			letra[i].setBackground(Color.ORANGE);
 			inf.add(letra[i]);
 			letra[i].addActionListener(this);
 			letra[i].setEnabled(false);
 		}	
 		
 		inf.add(playGame);	
+		playGame.setBackground(Color.GREEN);
+		playGame.setFont(fontplay);
 		playGame.addActionListener(this);
 		add(sup, BorderLayout.CENTER);		
 		add(inf, BorderLayout.SOUTH); 
-	
+		
 	}
 
 	
@@ -98,7 +110,7 @@ public class Juego extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String accion = e.getActionCommand();
 		
-		if(accion.equals("Jugar")) {
+		if(accion.equals("PLAY")) {
 			for(JButton b:letra)
 				b.setEnabled(true);
 			int posicion = (int) (Math.random() * palabras.size());
@@ -114,8 +126,7 @@ public class Juego extends JPanel implements ActionListener{
 			
 		}else {
 			char c = accion.charAt(0);
-			boolean fallo = true;
-			//boolean encontrada = true;
+			boolean fallo = true;			
 			for(int i=0;i<adivinar.length;i++) {
 				if(c==adivinar[i]) {
 					guiones[i] = c;
@@ -138,14 +149,11 @@ public class Juego extends JPanel implements ActionListener{
 					
 				}
 				
-				if (guiones.equals(palabras)){
+				if (adivinar.equals(linea)){
 					lblPalabra.setText("GANASTE");
 					lienzo.reset();
-					repaint();
-					
-				}
-				
-			//aciertos==guiones.length
+					repaint();					
+				}			
 			
 		}		
 		}

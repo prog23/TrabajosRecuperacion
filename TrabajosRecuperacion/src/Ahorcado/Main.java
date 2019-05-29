@@ -23,6 +23,7 @@ public class Main {
 		
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+
 		SwingUtilities.invokeLater(() -> {
 			frame.setVisible(true);
 		});

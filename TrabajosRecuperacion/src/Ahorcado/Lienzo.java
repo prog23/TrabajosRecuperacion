@@ -28,6 +28,7 @@ public class Lienzo extends JPanel {
 	
 	public Lienzo(int width, int height) {
 		setPreferredSize(new Dimension(width, height));
+		setBackground(Color.WHITE);
 		vector = new Shape[11];
 		vector[0] = new Line2D.Float(470, 470, 30, 470);
 		vector[1] = new Line2D.Float(30, 470, 30, 30);

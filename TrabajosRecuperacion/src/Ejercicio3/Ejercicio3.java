@@ -92,9 +92,7 @@ public class Ejercicio3 {
 								s.reset();
 								fin2 = true;
 							} else {
-								direccion.get(usuario).put(ip, 1);
-								System.out.println("Nueva IP: " + ip + " Usuario: " + usuario);
-								System.out.println(" ");
+								direccion.get(usuario).put(ip, 1);								
 								estado = 0;
 								token = null;
 								s.reset();
@@ -104,8 +102,6 @@ public class Ejercicio3 {
 							mens = 1;
 							direccion.put(usuario, new HashMap<>());
 							direccion.get(usuario).put(ip, mens);
-							System.out.println("Nuevo Usuario: " + usuario + " IP de acceso: " + ip);
-							System.out.println(" ");
 							estado = 0;
 							token = null;
 							s.reset();
