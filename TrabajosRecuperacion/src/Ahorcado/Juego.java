@@ -128,7 +128,9 @@ public class Juego extends JPanel implements ActionListener{
 				linea += (guiones[i] + " ");
 			}
 			
-			lblPalabra.setText(linea);
+			lblPalabra.setText(linea);				
+			
+			
 			
 		}else {
 			char c = accion.charAt(0);
@@ -141,19 +143,29 @@ public class Juego extends JPanel implements ActionListener{
 				}
 				linea += (guiones[i] + " ");
 			}
-			lblPalabra.setText(linea);
+			lblPalabra.setText(linea);		
+			
+			
+			
+			
 			
 			boolean fin = false;
 			if(fallo) {
 				fin = lienzo.incrementarFallos();
-			}
-						
+			}	
+			
+			for (int i = 0; i < letras.length();i++) {
+				if(e.getSource()==letra[i]) {
+					letra[i].setBackground(Color.RED);
+				} 
+		}
 					
 				if (fin) {				
 					
 					lblPalabra.setText("GAME OVER");					
 					lienzo.reset();
-					repaint();
+					
+					//repaint();
 					
 				} else {
 					boolean ganaste = true;
@@ -165,7 +177,7 @@ public class Juego extends JPanel implements ActionListener{
 					if (ganaste){					
 						lblPalabra.setText("GANASTE");
 						lienzo.reset();
-						repaint();					
+						//repaint();					
 					}
 				}			
 			
