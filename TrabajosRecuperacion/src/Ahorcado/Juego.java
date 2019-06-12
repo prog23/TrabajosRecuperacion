@@ -162,10 +162,15 @@ public class Juego extends JPanel implements ActionListener{
 					
 				if (fin) {				
 					
-					lblPalabra.setText("GAME OVER");					
+					lblPalabra.setText("GAME OVER");	
+					for (int i = 0; i < letras.length();i++) {
+						if(letra[i].equals(fin)) {
+							letra[i].setBackground(marronclaro);
+						}
+					}
 					lienzo.reset();
 					
-					//repaint();
+					
 					
 				} else {
 					boolean ganaste = true;
@@ -177,7 +182,7 @@ public class Juego extends JPanel implements ActionListener{
 					if (ganaste){					
 						lblPalabra.setText("GANASTE");
 						lienzo.reset();
-						//repaint();					
+						repaint();					
 					}
 				}			
 			
