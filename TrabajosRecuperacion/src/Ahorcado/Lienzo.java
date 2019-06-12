@@ -25,11 +25,12 @@ public class Lienzo extends JPanel {
 	private Shape[] vector;
 	private static int fallos = 0;
 	private Color marronclaro=new Color(107,0,0);
+	private Color fondo=new Color(253,234,220);
 	//Image img = Toolkit.getDefaultToolkit().createImage("/madera.jpg");
 	
 	public Lienzo(int width, int height) {
 		setPreferredSize(new Dimension(width, height));
-		setBackground(Color.WHITE);
+		setBackground(fondo);
 		vector = new Shape[11];
 		vector[0] = new Line2D.Float(470, 470, 30, 470);
 		vector[1] = new Line2D.Float(30, 470, 30, 30);

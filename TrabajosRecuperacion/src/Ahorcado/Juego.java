@@ -31,6 +31,10 @@ public class Juego extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private Lienzo lienzo;
 	private Color marronclaro=new Color(230,186,163);
+	private Color desactivado=new Color(255,214,209);
+	private Color rojod=new Color(245,153,153);
+	private Color activar=new Color(167,240,101);
+	private Color fondo=new Color(253,234,220);
 	//private Color marronletras=new Color(84,71,64);
 	private String letras="abcdefghijklmnñopqrstuvwxyz";
 	private Font font;		
@@ -69,8 +73,8 @@ public class Juego extends JPanel implements ActionListener{
 		
 		setLayout(new BorderLayout());
 		
-		JPanel sup = new JPanel(new GridLayout(1, 1));		
-		sup.setBackground(Color.WHITE);
+		JPanel sup = new JPanel(new GridLayout(1, 2));		
+		sup.setBackground(fondo);
 		
 		
 		lblPalabra.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
@@ -78,7 +82,7 @@ public class Juego extends JPanel implements ActionListener{
 										BorderFactory.createEmptyBorder(20, 20, 20, 20))));
 		
 		lblPalabra.setHorizontalAlignment(JLabel.CENTER);		
-		lblPalabra.setFont(font);		
+		lblPalabra.setFont(font);				
 		sup.add(lblPalabra);
 		
 		
@@ -87,7 +91,7 @@ public class Juego extends JPanel implements ActionListener{
 		JPanel inf = new JPanel (new GridLayout(4, 7));
 		inf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30), 
 				BorderFactory.createBevelBorder(BevelBorder.RAISED)));		
-		inf.setBackground(Color.WHITE);
+		inf.setBackground(fondo);
 		
 		
 		for(int i=0; i<letras.length();i++) {
@@ -100,7 +104,7 @@ public class Juego extends JPanel implements ActionListener{
 		}	
 		
 		inf.add(playGame);	
-		playGame.setBackground(Color.GREEN);
+		playGame.setBackground(activar);
 		playGame.setFont(fontplay);
 		playGame.addActionListener(this);
 		add(sup, BorderLayout.CENTER);		
@@ -121,7 +125,7 @@ public class Juego extends JPanel implements ActionListener{
 			adivinar = palabras.get(posicion).toCharArray();
 			System.out.println(palabras.get(posicion));
 			guiones = new char[adivinar.length];
-			playGame.setBackground(Color.RED);
+			playGame.setBackground(rojod);
 			linea = "";
 			for (int i = 0; i < adivinar.length; i++) {
 				guiones[i] = '_';
@@ -156,7 +160,9 @@ public class Juego extends JPanel implements ActionListener{
 			
 			for (int i = 0; i < letras.length();i++) {
 				if(e.getSource()==letra[i]) {
-					letra[i].setBackground(Color.RED);
+					
+					letra[i].setEnabled(false);
+					letra[i].setBackground(desactivado);
 				} 
 		}
 					
@@ -164,7 +170,7 @@ public class Juego extends JPanel implements ActionListener{
 					
 					lblPalabra.setText("GAME OVER");	
 					
-					playGame.setBackground(Color.GREEN);				
+					playGame.setBackground(activar);				
 					for(int i=0; i<letras.length();i++) {
 					letra[i].setEnabled(false);
 					letra[i].setBackground(marronclaro);
@@ -182,7 +188,7 @@ public class Juego extends JPanel implements ActionListener{
 						}
 					if (ganaste){					
 						lblPalabra.setText("GANASTE");	
-						playGame.setBackground(Color.GREEN);
+						playGame.setBackground(activar);
 						for(int i=0; i<letras.length();i++) {
 						letra[i].setEnabled(false);
 						letra[i].setBackground(marronclaro);
