@@ -7,7 +7,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.Map;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -151,8 +160,14 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e) {
+		
+		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+			System.out.println("Se está ejecutando la sentencia");
+			String mensaje = contacts.exec(textArea.getText());
+			textArea.setText("");
+			cmd.append(mensaje + System.lineSeparator());
+		}
 		
 	}
 
@@ -182,18 +197,21 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 			exec();
 		}
 	}
-	
-	private void load() {
-		if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
-			contacts.load(fileChooser.getSelectedFile());
-	}
-	
-	private void save() {
+
+	private void saveAs() {		
 		
-	}
-	
-	private void saveAs() {
 		
 	}
 
+	private void save() {
+		
+		
+	}
+
+	private void load() {
+		
+		
+	}
+	
+	
 }

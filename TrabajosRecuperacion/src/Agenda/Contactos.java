@@ -1,6 +1,7 @@
 package Agenda;
 
 import java.io.File;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -8,12 +9,13 @@ import java.util.TreeMap;
 public class Contactos extends TreeMap<String, String>{
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private Map<String, String> mapa = new TreeMap<String, String>();
 	public String exec(String cmd) {
-		String result = null;
-		
+		//String result = null;		
 		Scanner s = new Scanner(cmd);
 		int estado = 0;
+		String mensaje="";
 		String token;
 		String nombre = null;
 		while (estado != 5) {
@@ -28,7 +30,7 @@ public class Contactos extends TreeMap<String, String>{
 						estado = 1;
 					}
 				} catch (NoSuchElementException e) {
-					result = "Se esperaba 'buscar' o 'fin' o un nombre";
+					mensaje = "Se esperaba 'buscar' o 'fin' o un nombre";
 					estado = 5;
 				}
 				break;
@@ -37,7 +39,7 @@ public class Contactos extends TreeMap<String, String>{
 					s.skip("-");
 					estado = 3;
 				}catch (NoSuchElementException e) {
-					result = "Se esperaba '-'";
+					mensaje = "Se esperaba '-'";
 					estado = 5;
 				}
 				break;
@@ -46,7 +48,7 @@ public class Contactos extends TreeMap<String, String>{
 					s.skip(":");
 					estado = 4;
 				}catch (NoSuchElementException e) {
-					result = "Se esperaba ':'";
+					mensaje = "Se esperaba ':'";
 					estado = 5;
 				}
 				break;
@@ -56,7 +58,7 @@ public class Contactos extends TreeMap<String, String>{
 					put(nombre, token);
 					estado = 5;
 				}catch (NoSuchElementException e) {
-					result = "Se esperaba un teléfono";
+					mensaje = "Se esperaba un teléfono";
 					estado = 5;
 				}
 				break;
@@ -65,26 +67,34 @@ public class Contactos extends TreeMap<String, String>{
 					token = s.skip("\\p{L}+(\\s+\\p{L}+)*").match().group();
 					String telefono = get(token);
 					if (telefono != null)
-						result = token + " -> " + telefono;
+						mensaje = token + " -> " + telefono;
 					else
-						result = token + " no se encuentra en la agenda";
+						mensaje = token + " no se encuentra en la agenda";
 					estado = 5;
 				} catch (NoSuchElementException e) {
-					result = "Se esperaba un nombre";
+					mensaje = "Se esperaba un nombre";
 					estado = 5;
 				}
 				break;
 			}
 		}
 		
-		return result;
+		return mensaje;
 	}
-	
-	public void load(File file) {
+	public Map<String, String> getMapa() {
+		
+		return mapa;
+	}
+	public void setMapa(String nombre, String telefono) {
+		
+		mapa.put(nombre, telefono);
 		
 	}
+	public String sacarClave(String nombre) {
+		
+		return mapa.get(nombre);
+	}
 	
-	public void save(File file) {
 	
-}
+	
 }
