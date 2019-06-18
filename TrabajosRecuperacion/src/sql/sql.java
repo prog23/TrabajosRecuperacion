@@ -35,7 +35,7 @@ public class sql extends JFrame implements KeyListener{
 	private Connection conexion;
 	private Font font;
 	public sql() throws FontFormatException, IOException {
-		super("Cliente MySQL");
+		super("MySQL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Border borde = BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(10, 10, 10, 10), 
