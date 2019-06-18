@@ -70,9 +70,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 		b2.addActionListener(this);
 		panel.add(b);
 		panel.add(b2);
-		
-
-		
+				
 		ventana.setVisible(true);
 		
 	
@@ -220,7 +218,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 		Object objeto=e.getSource();
 		if(objeto==b2 || objeto==b )  {
 			
-			  b2.setBackground(Color.lightGray);
+			  b2.setBackground(fondocmd);
 			  b.setVisible(false);
 			  b2.setVisible(false);
 			  textArea = new JTextArea(15,30);
@@ -242,7 +240,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 		addWindowListener(this);
 	}
 		if(objeto==load) {
-			load.setBackground(Color.lightGray);
+			load.setBackground(fondocmd);
 			
 			int seleccion = fileChooser.showOpenDialog(null);
 			if (seleccion == JFileChooser.APPROVE_OPTION)
