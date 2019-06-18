@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -35,6 +36,14 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 	private static final long serialVersionUID = 1L;
 	
 	private Contactos contacts = new Contactos();
+	static JButton  b;
+	static JButton b2;
+	JPanel panel;
+	 JToolBar toolBar = new JToolBar();
+	JButton load;
+	JButton save;
+	JButton saveas;
+	private String root;
 	private JTextField cmd;
 	private JTextArea textArea;
 	private JFileChooser fileChooser = new JFileChooser();
@@ -42,31 +51,55 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 	private Color fondoplay=new Color(255,184,221);
 	private Color fondocmd=new Color(246,211,234);
 	public Main() throws IOException {
-		super("Prueba de Swing");
+		super("Agenda Intefaz");
+		JFrame ventana = new JFrame();
+
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel=new JPanel ();
+		ventana.setBounds(370,370,370,370);
+		ventana.add(panel);
+		panel.setBounds(370,370,370,370);
+		b=new JButton("Buscar/Borrar Contacto");
+	    b.setActionCommand("EXEC");
+		b.addActionListener(this);
+
+
+	    b2=new JButton("Ingresar Contacto");
+	    b2.setBounds(50,50,50,50);
+	    b2.setActionCommand("EXEC");
+		b2.addActionListener(this);
+		panel.add(b);
+		panel.add(b2);
+		
+
+		
+		ventana.setVisible(true);
+		
+	
 		setIconImage(ImageIO.read(getClass().getResource("/open.png")));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
-		JToolBar toolBar = new JToolBar();
+		
 		toolBar.setBackground(fondoplay);
 		
-		JButton load = new JButton(new ImageIcon(getClass().getResource("/open.png")));
+		load = new JButton(new ImageIcon(getClass().getResource("/open.png")));
 		load.setActionCommand("LOAD");
 		load.addActionListener(this);
 		load.setBackground(fondoplay);
 		toolBar.add(load);
 		
-		JButton save = new JButton(new ImageIcon(getClass().getResource("/save.png")));
+		save = new JButton(new ImageIcon(getClass().getResource("/save.png")));
 		save.setActionCommand("SAVE");
 		save.addActionListener(this);
 		save.setBackground(fondoplay);
 		toolBar.add(save);
 		
-		JButton saveAs = new JButton(new ImageIcon(getClass().getResource("/saveas.png")));
-		saveAs.setActionCommand("SAVEAS");
-		saveAs.addActionListener(this);
-		saveAs.setBackground(fondoplay);
-		toolBar.add(saveAs);
+		saveas = new JButton(new ImageIcon(getClass().getResource("/saveas.png")));
+		saveas.setActionCommand("SAVEAS");
+		saveas.addActionListener(this);
+		saveas.setBackground(fondoplay);
+		toolBar.add(saveas);
 		
 		add(toolBar, BorderLayout.NORTH);
 		
@@ -96,14 +129,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 		addWindowListener(this);
 	}
 	
-	private void exec() {
-		String result = contacts.exec(cmd.getText());
-		if (result != null) {
-			textArea.append(result + "\n");
-		}
-		cmd.setText("");
-//		cmd.requestFocus();
-	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -111,7 +137,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 			try {
 				new Main().setVisible(true);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		});
@@ -124,7 +150,7 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
@@ -137,81 +163,140 @@ public class Main extends JFrame implements ActionListener, KeyListener, WindowL
 
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void windowOpened(WindowEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
-		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-			System.out.println("Se está ejecutando la sentencia");
-			String mensaje = contacts.exec(textArea.getText());
-			textArea.setText("");
-			cmd.append(mensaje + System.lineSeparator());
+		if(e.getKeyCode()==KeyEvent.VK_ENTER){
+            
 		}
+		
+		
 		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		exec();
+	public void keyReleased(KeyEvent e) {
+		 if(e.getKeyCode()==KeyEvent.VK_ENTER){
+			 try {
+				exec();
+			
+			} catch (IOException e1) {
+				
+				e1.printStackTrace();
+			}
+}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("LOAD")) {
-			load();
+		
+		Object objeto=e.getSource();
+		if(objeto==b2 || objeto==b )  {
+			
+			  b2.setBackground(Color.lightGray);
+			  b.setVisible(false);
+			  b2.setVisible(false);
+			  textArea = new JTextArea(15,30);
+			  cmd=new  JTextField (30) ;
+			  cmd.addKeyListener(this);
+			  textArea.setEditable(false);
+			  textArea.setFocusable(false);				    
+		
+		 JLabel etiqueta=new JLabel("menu");
+		 toolBar.add(etiqueta);		
+		
+		panel.add(toolBar, BorderLayout.NORTH);
+		toolBar.setFloatable(false);
+		panel.add(textArea,BorderLayout.LINE_END);
+		panel.add(cmd,BorderLayout.LINE_END);
+		
+		pack();
+		setLocationRelativeTo(null);
+		addWindowListener(this);
+	}
+		if(objeto==load) {
+			load.setBackground(Color.lightGray);
+			
+			int seleccion = fileChooser.showOpenDialog(null);
+			if (seleccion == JFileChooser.APPROVE_OPTION)
+			{
+			   File fichero = fileChooser.getSelectedFile();
+			 
+			try {
+				root = fichero.getCanonicalPath();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} 
+			contacts.leer(root);
+			  System.out.println(root);
+			}
+			
+}
+		if(objeto==saveas) {
+			saveas.setBackground(Color.lightGray);
+			fileChooser.showSaveDialog(null);
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+		    File fichero = fileChooser.getSelectedFile();
+		   
+			try {
+				root = fichero.getCanonicalPath();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} 
+			contacts.escribir(root);
+			  System.out.println(root);
+		
+			
+		   
+		}if(objeto==save) {
+			save.setBackground(Color.lightGray);
+			
+			Contactos.escribir(root);
 		}
-		else if (e.getActionCommand().equals("SAVE")) {
-			save();
+	}
+	
+	private void exec() throws IOException {
+		String result = contacts.exec(cmd.getText());
+		 textArea.setFocusable(true);
+		 if (result != null) {
+		textArea.append(result +"\n");
 		}
-		else if (e.getActionCommand().equals("SAVEAS")) {
-			saveAs();
-		}
-		else if (e.getActionCommand().equals("EXEC")) {
-			exec();
-		}
+		cmd.setText("");
 	}
 
-	private void saveAs() {		
 		
-		
-	}
+	
+	
 
-	private void save() {
-		
-		
-	}
 
-	private void load() {
-		
-		
-	}
 	
 	
 }
